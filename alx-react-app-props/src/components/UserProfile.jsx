@@ -1,7 +1,7 @@
-import UserInfo from './UserInfo';
+import UserDetails from './UserDetails';
 
 function UserProfile() {
-    return <UserInfo />;
+    return <UserDetails />;
 }
 
 export default UserProfile;
