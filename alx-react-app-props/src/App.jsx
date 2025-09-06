@@ -1,5 +1,6 @@
-import UserProfile from './UserProfile';
-import UserContext from './context/UserContext'; 
+import React from 'react';
+import UserContext from './UserContext';
+import UserProfile from './components/UserProfile';
 
 function App() {
   const userData = { name: "Jane Doe", email: "jane.doe@example.com" };
@@ -12,4 +13,5 @@ function App() {
 }
 
 export default App;
+
 
