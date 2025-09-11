@@ -225,3 +225,16 @@
   gap: 20px;
   margin-top: 20px;
 }
+.favorites-section,
+.recommendations-section {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.favorites-section h2,
+.recommendations-section h2 {
+  color: #28a745;
+  margin-bottom: 15px;
+}
