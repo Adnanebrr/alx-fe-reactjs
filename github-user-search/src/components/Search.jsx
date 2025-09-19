@@ -35,7 +35,7 @@ const Search = () => {
       setUsers([userData]); // Wrap in array to use .map()
     } catch (err) {
       setError('Looks like we cant find the user');
-      console.error(err);
+     
     } finally {
       setLoading(false);
     }
@@ -63,7 +63,7 @@ const Search = () => {
       setUsers(userDetails);
     } catch (err) {
       setError('Error searching users. Please try again.');
-      console.error(err);
+      
     } finally {
       setLoading(false);
     }

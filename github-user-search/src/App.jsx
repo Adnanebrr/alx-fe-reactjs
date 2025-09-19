@@ -28,7 +28,7 @@ function App() {
       setUsers(userDetails);
     } catch (err) {
       setError('Error searching users. Please try again.');
-      console.error(err);
+      
     } finally {
       setLoading(false);
     }

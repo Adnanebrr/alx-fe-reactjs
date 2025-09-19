@@ -7,7 +7,7 @@ export const fetchUserData = async (username) => {
     const response = await axios.get(`${GITHUB_API_URL}/users/${username}`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching user data:', error);
+    
     throw error;
   }
 };
@@ -27,7 +27,7 @@ export const advancedSearchUsers = async (params) => {
     
     return response.data;
   } catch (error) {
-    console.error('Error in advanced search:', error);
+    
     throw error;
   }
 };
@@ -42,7 +42,7 @@ export const getUsersDetails = async (usernames) => {
     );
     return userDetails;
   } catch (error) {
-    console.error('Error fetching user details:', error);
+    
     throw error;
   }
 };
