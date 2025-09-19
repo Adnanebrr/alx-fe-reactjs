@@ -71,3 +71,99 @@ button:hover {
 .error {
   color: red;
 }
+.App {
+  text-align: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.search-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.search-form {
+  margin: 30px 0;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.search-input {
+  padding: 12px;
+  width: 300px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.search-button {
+  padding: 12px 24px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.search-button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.search-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.loading {
+  color: #007bff;
+  font-size: 18px;
+}
+
+.error {
+  color: #dc3545;
+  font-size: 18px;
+}
+
+.user-card {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.avatar {
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.user-card h2 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.user-card p {
+  color: #666;
+  margin: 8px 0;
+}
+
+.profile-link {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.profile-link:hover {
+  background-color: #218838;
+}
