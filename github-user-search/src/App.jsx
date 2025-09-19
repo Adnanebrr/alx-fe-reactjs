@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import SearchBar from './components/SearchBar';
-import { fetchUserData } from './services/githubApi'; 
+import { fetchUserData } from './services/githubService'; 
 import './App.css';
 
 function App() {
