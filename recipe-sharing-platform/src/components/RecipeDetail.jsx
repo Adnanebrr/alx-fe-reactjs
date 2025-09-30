@@ -1,4 +1,6 @@
+// RecipeDetail component
 import React, { useState, useEffect } from 'react';
+// ... rest of existing code
 import { useParams, Link } from 'react-router-dom';
 import recipeData from '../data.json';
 
