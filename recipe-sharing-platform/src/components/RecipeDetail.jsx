@@ -63,34 +63,30 @@ function RecipeDetail() {
 
         {/* Recipe Details Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Ingredients Card */}
-          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Ingredients</h2>
-            <ul className="space-y-2">
-              <li className="flex items-center">
-                <span className="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
-                <span>Ingredient 1 for {recipe.title}</span>
-              </li>
-              <li className="flex items-center">
-                <span className="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
-                <span>Ingredient 2 for {recipe.title}</span>
-              </li>
-              <li className="flex items-center">
-                <span className="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
-                <span>Ingredient 3 for {recipe.title}</span>
-              </li>
-            </ul>
-          </div>
+        {/* Ingredients Card */}
+<div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+  <h2 className="text-2xl font-bold text-gray-800 mb-4">Ingredients</h2>
+  <ul className="space-y-2">
+    {recipe.ingredients && recipe.ingredients.map((ingredient, index) => (
+      <li key={index} className="flex items-center">
+        <span className="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+        <span>{ingredient}</span>
+      </li>
+    ))}
+  </ul>
+</div>
 
-          {/* Instructions Card */}
-          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Instructions</h2>
-            <ol className="space-y-4 list-decimal list-inside">
-              <li className="pb-2 border-b border-gray-100">Step 1: Prepare ingredients for {recipe.title}</li>
-              <li className="pb-2 border-b border-gray-100">Step 2: Cook according to traditional methods</li>
-              <li className="pb-2 border-b border-gray-100">Step 3: Serve and enjoy your {recipe.title}</li>
-            </ol>
-          </div>
+         {/* Instructions Card */}
+<div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+  <h2 className="text-2xl font-bold text-gray-800 mb-4">Instructions</h2>
+  <ol className="space-y-4 list-decimal list-inside">
+    {recipe.instructions && recipe.instructions.map((instruction, index) => (
+      <li key={index} className="pb-2 border-b border-gray-100">
+        {instruction}
+      </li>
+    ))}
+  </ol>
+</div>
         </div>
       </div>
     </div>
