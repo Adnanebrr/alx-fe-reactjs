@@ -1,0 +1,15 @@
+export default {
+  testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.js'],
+  moduleNameMapping: {
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+  },
+  transform: {
+    '^.+\\.[jt]sx?$': 'babel-jest',
+  },
+  testMatch: [
+    '<rootDir>/src/**/__tests__/**/*.(js|jsx)',
+    '<rootDir>/src/**/?(*.)(spec|test).(js|jsx)'
+  ],
+  moduleFileExtensions: ['js', 'jsx', 'json'],
+};
