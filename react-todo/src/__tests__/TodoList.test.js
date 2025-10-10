@@ -1,33 +1,60 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import TodoList from '../components/TodoList';
+import AddTodoForm from '../components/AddTodoForm';
 
-test('TodoList component renders with initial todos', () => {
-  render(<TodoList />);
-  expect(screen.getByText('Learn React Testing')).toBeInTheDocument();
-  expect(screen.getByText('Build Todo List Component')).toBeInTheDocument();
-  expect(screen.getByText('Write Comprehensive Tests')).toBeInTheDocument();
+test('renders TodoList component', () => {
+    render(<TodoList />);
+    expect(screen.getByText(/My todos:/i)).toBeInTheDocument();
+    expect(screen.getAllByText('Delete')[0]).toBeInTheDocument();
 });
 
-test('TodoList component adds new todo', async () => {
-  const user = userEvent.setup();
-  render(<TodoList />);
-  await user.type(screen.getByTestId('todo-input'), 'New Test Todo');
-  await user.click(screen.getByTestId('add-todo-button'));
-  expect(screen.getByText('New Test Todo')).toBeInTheDocument();
+test('adds new todo', () => {
+    const setTodos = jest.fn();
+
+    render(<AddTodoForm setTodos={setTodos} />);
+
+    const input = screen.getByPlaceholderText('To do title');
+    const button = screen.getByText('Add Todo');
+
+    fireEvent.change(input, { target: { value: 'New Todo' } });
+
+    fireEvent.click(button);
+
+    expect(setTodos).toHaveBeenCalledWith(expect.any(Function));
+
+    const updateFunction = setTodos.mock.calls[0][0];
+
+    const newTodos = updateFunction([]);
+    expect(newTodos).toHaveLength(1);
+    expect(newTodos[0]).toEqual({
+        id: expect.any(Number),
+        title: 'New Todo',
+        completed: false
+    });
 });
 
-test('TodoList component toggles todo completion', async () => {
-  const user = userEvent.setup();
-  render(<TodoList />);
-  await user.click(screen.getByTestId('todo-checkbox-1'));
-  expect(screen.getByTestId('todo-checkbox-1')).toBeChecked();
-});
+test('toggles todo', () => {
+    render(<TodoList />);
 
-test('TodoList component deletes todo', async () => {
-  const user = userEvent.setup();
-  render(<TodoList />);
-  await user.click(screen.getByTestId('delete-todo-1'));
-  expect(screen.queryByText('Learn React Testing')).not.toBeInTheDocument();
+    const checkbox = screen.getByLabelText('Do the dishes');
+
+    expect(checkbox).not.toBeChecked();
+
+    fireEvent.click(checkbox);
+
+    expect(checkbox).toBeChecked();
+})
+
+test('deletes a todo item', () => {
+    render(<TodoList />);
+
+    const deleteButton = screen.getAllByText('Delete')[0];
+
+    fireEvent.click(deleteButton);
+
+    expect(screen.queryByText('Do the dishes')).not.toBeInTheDocument();
+
+    expect(screen.getByText('Take out the trash')).toBeInTheDocument();
 });
