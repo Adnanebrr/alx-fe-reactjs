@@ -1,11 +1,17 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
-function Navigation({ isAuthenticated }) {
+function Navigation() {
   const location = useLocation();
+  const { isAuthenticated, user, logout } = useAuth();
 
   const isActive = (path) => {
     return location.pathname === path ? 'bg-blue-700' : '';
+  };
+
+  const handleLogout = () => {
+    logout();
   };
 
   return (
@@ -16,7 +22,7 @@ function Navigation({ isAuthenticated }) {
             React Router Advanced
           </Link>
           
-          <div className="flex space-x-4">
+          <div className="flex items-center space-x-4">
             <Link 
               to="/" 
               className={`px-3 py-2 rounded-md hover:bg-blue-700 transition-colors ${isActive('/')}`}
@@ -35,13 +41,22 @@ function Navigation({ isAuthenticated }) {
             >
               Blog
             </Link>
+            
             {isAuthenticated ? (
-              <Link 
-                to="/profile" 
-                className={`px-3 py-2 rounded-md hover:bg-blue-700 transition-colors ${isActive('/profile')}`}
-              >
-                Profile
-              </Link>
+              <div className="flex items-center space-x-4">
+                <Link 
+                  to="/profile" 
+                  className={`px-3 py-2 rounded-md hover:bg-blue-700 transition-colors ${isActive('/profile')}`}
+                >
+                  Profile ({user?.username || 'User'})
+                </Link>
+                <button 
+                  onClick={handleLogout}
+                  className="px-3 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                >
+                  Logout
+                </button>
+              </div>
             ) : (
               <Link 
                 to="/login" 
