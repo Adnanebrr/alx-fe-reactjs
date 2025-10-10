@@ -33,77 +33,45 @@ function TodoList() {
     setTodos(todos.filter(todo => todo.id !== id));
   };
 
-  const totalTodos = todos.length;
-  const completedTodos = todos.filter(todo => todo.completed).length;
-
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-      <form onSubmit={addTodo} className="mb-6">
-        <div className="flex space-x-4">
-          <input
-            type="text"
-            value={newTodo}
-            onChange={(e) => setNewTodo(e.target.value)}
-            placeholder="Add a new todo..."
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            data-testid="todo-input"
-          />
-          <button
-            type="submit"
-            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            data-testid="add-todo-button"
-          >
-            Add Todo
-          </button>
-        </div>
+    <div>
+      <form onSubmit={addTodo}>
+        <input
+          type="text"
+          value={newTodo}
+          onChange={(e) => setNewTodo(e.target.value)}
+          placeholder="Add a new todo..."
+          data-testid="todo-input"
+        />
+        <button type="submit" data-testid="add-todo-button">
+          Add Todo
+        </button>
       </form>
 
-      <div className="mb-4 p-4 bg-gray-50 rounded-lg">
-        <div className="flex justify-between text-sm text-gray-600">
-          <span data-testid="total-todos">Total: {totalTodos}</span>
-          <span data-testid="completed-todos">Completed: {completedTodos}</span>
-          <span data-testid="pending-todos">Pending: {totalTodos - completedTodos}</span>
-        </div>
+      <div>
+        <span data-testid="total-todos">Total: {todos.length}</span>
+        <span data-testid="completed-todos">
+          Completed: {todos.filter(todo => todo.completed).length}
+        </span>
       </div>
 
       {todos.length === 0 ? (
-        <div className="text-center py-8 text-gray-500" data-testid="empty-message">
-          No todos yet. Add one above!
-        </div>
+        <div data-testid="empty-message">No todos yet. Add one above!</div>
       ) : (
-        <ul className="space-y-3" data-testid="todo-list">
+        <ul data-testid="todo-list">
           {todos.map(todo => (
-            <li
-              key={todo.id}
-              className={`flex items-center justify-between p-4 border rounded-lg transition-colors ${
-                todo.completed 
-                  ? 'bg-green-50 border-green-200' 
-                  : 'bg-white border-gray-200 hover:bg-gray-50'
-              }`}
-              data-testid={`todo-item-${todo.id}`}
-            >
-              <div className="flex items-center space-x-3">
-                <input
-                  type="checkbox"
-                  checked={todo.completed}
-                  onChange={() => toggleTodo(todo.id)}
-                  className="h-5 w-5 text-blue-600 rounded focus:ring-blue-500"
-                  data-testid={`todo-checkbox-${todo.id}`}
-                />
-                <span
-                  className={`text-lg ${
-                    todo.completed 
-                      ? 'line-through text-gray-400' 
-                      : 'text-gray-800'
-                  }`}
-                  data-testid={`todo-text-${todo.id}`}
-                >
-                  {todo.text}
-                </span>
-              </div>
+            <li key={todo.id} data-testid={`todo-item-${todo.id}`}>
+              <input
+                type="checkbox"
+                checked={todo.completed}
+                onChange={() => toggleTodo(todo.id)}
+                data-testid={`todo-checkbox-${todo.id}`}
+              />
+              <span data-testid={`todo-text-${todo.id}`}>
+                {todo.text}
+              </span>
               <button
                 onClick={() => deleteTodo(todo.id)}
-                className="px-3 py-1 text-red-600 hover:text-red-800 hover:bg-red-50 rounded transition-colors"
                 data-testid={`delete-todo-${todo.id}`}
               >
                 Delete
