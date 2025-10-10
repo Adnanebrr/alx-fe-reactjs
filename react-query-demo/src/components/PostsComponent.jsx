@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 // Function to fetch posts from JSONPlaceholder API
@@ -11,18 +11,31 @@ const fetchPosts = async () => {
 };
 
 function PostsComponent() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 5;
+
   const { 
     data: posts, 
     isLoading, 
     error, 
     isError,
     refetch,
-    isFetching
+    isFetching,
+    isPreviousData 
   } = useQuery({
-    queryKey: ['posts'],
+    queryKey: ['posts', currentPage],
     queryFn: fetchPosts,
-    refetchOnWindowFocus: false, // Optional: prevent refetch on window focus
+    cacheTime: 5 * 60 * 1000, // 5 minutes cache time
+    staleTime: 2 * 60 * 1000, // 2 minutes stale time
+    keepPreviousData: true, // Keep previous data while fetching new data
+    refetchOnWindowFocus: false,
   });
+
+  // Calculate pagination
+  const startIndex = (currentPage - 1) * postsPerPage;
+  const endIndex = startIndex + postsPerPage;
+  const displayedPosts = posts?.slice(startIndex, endIndex);
+  const totalPages = posts ? Math.ceil(posts.length / postsPerPage) : 0;
 
   if (isLoading) {
     return (
@@ -75,17 +88,60 @@ function PostsComponent() {
         </div>
       </div>
 
-      {/* Cache Info */}
+      {/* Cache Configuration Display */}
       <div className="mb-6 p-4 bg-blue-50 rounded-lg">
-        <p className="text-blue-700 text-sm">
-          💡 <strong>React Query Demo:</strong> Navigate away and come back to see cached data load instantly. 
-          Click "Refresh Posts" to force a fresh API call.
-        </p>
+        <h3 className="font-semibold text-blue-800 mb-2">React Query Cache Configuration:</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+          <div className="bg-white p-3 rounded border">
+            <strong>cacheTime:</strong> 5 minutes
+            <p className="text-gray-600 text-xs mt-1">Data stays in cache for 5 minutes after unmount</p>
+          </div>
+          <div className="bg-white p-3 rounded border">
+            <strong>staleTime:</strong> 2 minutes
+            <p className="text-gray-600 text-xs mt-1">Data considered fresh for 2 minutes</p>
+          </div>
+          <div className="bg-white p-3 rounded border">
+            <strong>keepPreviousData:</strong> true
+            <p className="text-gray-600 text-xs mt-1">Shows old data while fetching new data</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="flex justify-between items-center mb-6">
+        <div className="flex space-x-2">
+          <button
+            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 rounded-md ${
+              currentPage === 1
+                ? 'bg-gray-300 cursor-not-allowed'
+                : 'bg-gray-500 hover:bg-gray-600 text-white'
+            }`}
+          >
+            Previous
+          </button>
+          <button
+            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-2 rounded-md ${
+              currentPage === totalPages
+                ? 'bg-gray-300 cursor-not-allowed'
+                : 'bg-gray-500 hover:bg-gray-600 text-white'
+            }`}
+          >
+            Next
+          </button>
+        </div>
+        <span className="text-sm text-gray-600">
+          Page {currentPage} of {totalPages}
+          {isPreviousData && <span className="ml-2 text-blue-500">(Loading next page...)</span>}
+        </span>
       </div>
 
       {/* Posts List */}
-      <div className="space-y-4 max-h-96 overflow-y-auto">
-        {posts?.slice(0, 10).map((post) => (
+      <div className="space-y-4">
+        {displayedPosts?.map((post) => (
           <div
             key={post.id}
             className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
@@ -111,14 +167,14 @@ function PostsComponent() {
         </div>
       )}
 
-      {/* Instructions for testing */}
+      {/* Testing Instructions */}
       <div className="mt-8 p-4 bg-gray-50 rounded-lg">
-        <h4 className="font-semibold text-gray-700 mb-2">Testing Instructions:</h4>
+        <h4 className="font-semibold text-gray-700 mb-2">Testing Cache Features:</h4>
         <ul className="text-sm text-gray-600 list-disc list-inside space-y-1">
-          <li>Open Browser DevTools → Network tab</li>
-          <li>First load: You'll see API call to JSONPlaceholder</li>
-          <li>Navigate away/return: No API call (data from cache)</li>
-          <li>Click "Refresh Posts": New API call forced</li>
+          <li><strong>cacheTime:</strong> Navigate away and return within 5 minutes - data loads instantly from cache</li>
+          <li><strong>staleTime:</strong> Data stays fresh for 2 minutes before refetching</li>
+          <li><strong>keepPreviousData:</strong> Switch pages smoothly without blank screens</li>
+          <li>Check Network tab to see reduced API calls due to caching</li>
         </ul>
       </div>
     </div>
