@@ -10,7 +10,8 @@ import Login from './components/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 
-const isAuthenticated = false; 
+// Mock authentication (in real app, this would come from context/state)
+const isAuthenticated = false; // Change to true to test protected routes
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:postId" element={<BlogPost />} />
+            <Route path="/blog/:id" element={<BlogPost />} />
             <Route path="/login" element={<Login />} />
             
             {/* Protected Routes */}

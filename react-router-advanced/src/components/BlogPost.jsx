@@ -34,8 +34,8 @@ const blogPosts = [
 ];
 
 function BlogPost() {
-  const { postId } = useParams();
-  const post = blogPosts.find(p => p.id === parseInt(postId));
+  const { id } = useParams();
+  const post = blogPosts.find(p => p.id === parseInt(id));
 
   if (!post) {
     return (
@@ -73,7 +73,7 @@ function BlogPost() {
         <div className="mt-8 p-4 bg-green-50 rounded-lg">
           <h3 className="font-semibold text-green-800 mb-2">Dynamic Route Information:</h3>
           <p className="text-sm text-green-700">
-            This page is rendered using the dynamic route parameter: <code>postId = {postId}</code>.
+            This page is rendered using the dynamic route parameter: <code>id = {id}</code>.
             The component uses the <code>useParams()</code> hook to extract this value from the URL.
           </p>
         </div>
