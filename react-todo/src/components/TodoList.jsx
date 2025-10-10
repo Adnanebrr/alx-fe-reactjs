@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 function TodoList() {
-  // Initial state with demo todos
   const [todos, setTodos] = useState([
     { id: 1, text: 'Learn React Testing', completed: false },
     { id: 2, text: 'Build Todo List Component', completed: true },
@@ -10,7 +9,6 @@ function TodoList() {
   
   const [newTodo, setNewTodo] = useState('');
 
-  // Add new todo
   const addTodo = (e) => {
     e.preventDefault();
     if (newTodo.trim() === '') return;
@@ -25,25 +23,21 @@ function TodoList() {
     setNewTodo('');
   };
 
-  // Toggle todo completion
   const toggleTodo = (id) => {
     setTodos(todos.map(todo =>
       todo.id === id ? { ...todo, completed: !todo.completed } : todo
     ));
   };
 
-  // Delete todo
   const deleteTodo = (id) => {
     setTodos(todos.filter(todo => todo.id !== id));
   };
 
-  // Count todos
   const totalTodos = todos.length;
   const completedTodos = todos.filter(todo => todo.completed).length;
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-      {/* Add Todo Form */}
       <form onSubmit={addTodo} className="mb-6">
         <div className="flex space-x-4">
           <input
@@ -64,7 +58,6 @@ function TodoList() {
         </div>
       </form>
 
-      {/* Todo Stats */}
       <div className="mb-4 p-4 bg-gray-50 rounded-lg">
         <div className="flex justify-between text-sm text-gray-600">
           <span data-testid="total-todos">Total: {totalTodos}</span>
@@ -73,7 +66,6 @@ function TodoList() {
         </div>
       </div>
 
-      {/* Todo List */}
       {todos.length === 0 ? (
         <div className="text-center py-8 text-gray-500" data-testid="empty-message">
           No todos yet. Add one above!
